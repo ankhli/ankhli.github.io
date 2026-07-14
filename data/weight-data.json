@@ -13,6 +13,7 @@
   "records": [
     {
       "date": "2026-07-14",
+      "dayOfWeek": "周二",
       "weight": 49.0,
       "bodyFat": 22.4,
       "muscle": 73.0,
@@ -28,10 +29,9 @@
       "sleep": { "hours": 3, "bedtimeBefore2330": false },
       "bowel": false,
       "waterMl": 0,
-      "menstrual": ""
+      "menstrual": "",
+      "notes": "晚睡3h，体脂秤偏低估算。便秘2周。数据需要修正基线。"
     }
   ],
-  "notes": {
-    "2026-07-14": "晚睡只睡3h，体脂秤读数偏低（BIA受脱水影响）。两周便秘，体重可能含0.5-1kg肠道滞留。睡眠是第一优先级。"
-  }
+  "notes": {}
 }
