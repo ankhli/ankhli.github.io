@@ -200,11 +200,11 @@
 </head>
 <body>
 
-<h2 class="sr-only">减重周报 - 李林峰 - 2026年7月13日至7月19日</h2>
+<h2 class="sr-only">减重周报 - ankh - 2026年7月13日至7月19日</h2>
 
 <div class="header">
   <h1>减重周报</h1>
-  <div class="sub">第28周 · 7月13日 – 7月19日 · 李林峰 / 31岁 / 158cm</div>
+  <div class="sub">第28周 · 7月13日 – 7月19日 · ankh / 31岁 / 158cm</div>
 </div>
 
 <div class="cards" id="summaryCards"></div>
@@ -259,7 +259,7 @@
 (function() {
 
 var FALLBACK = {
-  user: { name:"李林峰", height:158, birthYear:1995, gender:"female", targetWeight:47, targetWeightLongTerm:47, targetCalories:1350, bmr:1191, tdee:1550 },
+  user: { name:"ankh", height:158, birthYear:1995, gender:"female", targetWeight:47, targetWeightLongTerm:47, targetCalories:1350, bmr:1191, tdee:1550 },
   records: [],
   notes: {}
 };
@@ -532,6 +532,8 @@ script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js'
 script.onload = function() { hasChart = true; };
 script.onerror = function() { /* charts won't render, but summary/table/insights will */ };
 document.head.appendChild(script);
+
+})();
 </script>
 </body>
 </html>
