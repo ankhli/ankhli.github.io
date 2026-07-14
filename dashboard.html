@@ -259,27 +259,17 @@
 <script>
 (function() {
 
-var DATA = {
-  user: {
-    name: "李林峰",
-    height: 158,
-    birthYear: 1995,
-    gender: "female",
-    targetWeight: 47,
-    targetCalories: 1350,
-    bmr: 1191,
-    tdee: 1550
-  },
-  records: [
-    { date:"2026-07-14", weight:49.0, bodyFat:22.4, muscle:73.0, visceral:2, bmr:1191, water:57.4, protein:15.6, bone:2.2, bodyAge:29, bmi:19.6, calories:{breakfast:0,lunch:0,dinner:0,snack:0,total:0}, exercise:{minutes:0,type:"",completed:false}, sleep:{hours:3,bedtimeBefore2330:false}, bowel:false, waterMl:0, menstrual:"" }
-  ],
-  notes: {
-    "2026-07-14": "晚睡3h，体脂秤偏低估。便秘2周。"
-  }
+var FALLBACK = {
+  user: { name:"李林峰", height:158, birthYear:1995, gender:"female", targetWeight:47, targetCalories:1350, bmr:1191, tdee:1550 },
+  records: [],
+  notes: {}
 };
 
-var M = DATA.user;
-var recs = DATA.records;
+var M, recs;
+
+function init(data) {
+  M = data.user;
+  recs = data.records;
 
 var dates = ['周一','周二','周三','周四','周五','周六','周日'];
 var weekLabels = [];
@@ -520,8 +510,12 @@ renderWeightChart();
 renderCalorieChart();
 renderTable();
 renderInsights();
+}
 
-})();
+fetch('/data/weight-data.json')
+  .then(function(r) { return r.json(); })
+  .then(function(d) { init(d); })
+  .catch(function() { init(FALLBACK); });
 </script>
 </body>
 </html>
