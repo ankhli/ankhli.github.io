@@ -24,14 +24,14 @@
       "bone": 2.2,
       "bodyAge": 29,
       "bmi": 19.6,
-      "calories": { "breakfast": 269, "lunch": 507, "dinner": 0, "snack": 0, "total": 776 },
+      "calories": { "breakfast": 269, "lunch": 507, "dinner": 0, "snack": 7, "total": 783 },
       "protein": { "breakfast": 15.5, "lunch": 65, "dinner": 0, "total": 80.5 },
       "exercise": { "minutes": 0, "type": "", "completed": false },
       "sleep": { "hours": 3, "bedtimeBefore2330": false },
       "bowel": false,
       "waterMl": 0,
       "menstrual": "",
-      "notes": "早：无糖黑豆浆+玉米半根+水煮蛋+烫生菜(269kcal)。午：虾+鸡胸+杂粮饭+蛋+西葫芦/胡萝卜/玉米/生菜(507kcal)。蛋白80.5g已达标。晚睡3h前一天，体脂秤偏低估算。便秘2周。"
+      "notes": "早：无糖黑豆浆+玉米半根+水煮蛋+烫生菜(269kcal)。午：虾+鸡胸+杂粮饭+蛋+西葫芦/胡萝卜/玉米/生菜(507kcal)。snack：美式+干菊花(7kcal)。蛋白80.5g已达标。晚睡3h前一天，体脂秤偏低估算。便秘2周。"
     }
   ],
   "notes": {}
