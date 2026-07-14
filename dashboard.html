@@ -255,17 +255,20 @@
   数据由 WorkBuddy 自动采集分析 · 每周日更新
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
 (function() {
 
 var FALLBACK = {
-  user: { name:"李林峰", height:158, birthYear:1995, gender:"female", targetWeight:47, targetCalories:1350, bmr:1191, tdee:1550 },
+  user: { name:"李林峰", height:158, birthYear:1995, gender:"female", targetWeight:47, targetWeightLongTerm:47, targetCalories:1350, bmr:1191, tdee:1550 },
   records: [],
   notes: {}
 };
 
 var M, recs;
+var hasChart = false;
+
+var statusEl = document.getElementById('summaryCards');
+if (statusEl) statusEl.innerHTML = '<div class="card" style="grid-column:1/-1;text-align:center;padding:20px"><div class="label">正在加载数据...</div></div>';
 
 function init(data) {
   M = data.user;
@@ -333,6 +336,8 @@ function renderSummary() {
 }
 
 function renderWeightChart() {
+  if (!hasChart) { document.querySelector('#weightChart').parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:40px">图表加载中...</div>'; return; }
+  try {
   var ctx = document.getElementById('weightChart').getContext('2d');
   new Chart(ctx, {
     type: 'line',
@@ -407,9 +412,12 @@ function renderWeightChart() {
       }
     }
   });
+  } catch(e) { document.querySelector('#weightChart').parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:40px">图表组件加载失败，请刷新页面重试</div>'; }
 }
 
 function renderCalorieChart() {
+  if (!hasChart) { document.querySelector('#calorieChart').parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:40px">图表加载中...</div>'; return; }
+  try {
   var ctx = document.getElementById('calorieChart').getContext('2d');
   new Chart(ctx, {
     type: 'bar',
@@ -442,6 +450,7 @@ function renderCalorieChart() {
       }
     }
   });
+  } catch(e) { document.querySelector('#calorieChart').parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:40px">图表组件加载失败，请刷新页面重试</div>'; }
 }
 
 function renderTable() {
@@ -516,6 +525,13 @@ fetch('/data/weight-data.json')
   .then(function(r) { return r.json(); })
   .then(function(d) { init(d); })
   .catch(function() { init(FALLBACK); });
+
+// Load Chart.js dynamically (jsdelivr works better in China than cdnjs)
+var script = document.createElement('script');
+script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
+script.onload = function() { hasChart = true; };
+script.onerror = function() { /* charts won't render, but summary/table/insights will */ };
+document.head.appendChild(script);
 </script>
 </body>
 </html>
