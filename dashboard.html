@@ -3,223 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>减重周报 - 李林峰</title>
+<title>减重看板 - ankh</title>
 <style>
   :root {
-    --bg: #fafaf8;
-    --card: #ffffff;
-    --text: #3a3a3a;
-    --text-secondary: #8a8a8a;
-    --text-muted: #b0b0b0;
-    --border: #e8e5df;
-    --border-light: #f0ede8;
-    --radius: 12px;
-    --radius-sm: 8px;
-
-    --c-weight: #8ba0b4;
-    --c-weight-light: #e8eef3;
-    --c-calorie: #c4a3a0;
-    --c-calorie-light: #f5eceb;
-    --c-fat: #9db5a0;
-    --c-fat-light: #eaf0ea;
-    --c-sleep: #a8a6c4;
-    --c-sleep-light: #efeff5;
-
-    --good: #8aab8f;
-    --good-light: #eaf0ea;
-    --warn: #c4a980;
-    --warn-light: #f5efe3;
-    --bad: #c48888;
-    --bad-light: #f5eaea;
-
-    --red: #c47878;
-    --green: #7da882;
+    --bg: #fafaf8; --card: #ffffff; --text: #3a3a3a; --text-2: #8a8a8a; --text-3: #b0b0b0;
+    --border: #e8e5df; --border-l: #f0ede8; --r: 12px; --r-s: 8px;
+    --c-w: #8ba0b4; --c-c: #c4a3a0; --c-f: #9db5a0; --c-s: #a8a6c4;
+    --good: #8aab8f; --good-l: #eaf0ea; --warn: #c4a980; --warn-l: #f5efe3; --bad: #c48888; --bad-l: #f5eaea;
+    --red: #c47878; --green: #7da882;
   }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    font-size: 14px;
-    line-height: 1.6;
-    padding: 16px;
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .header {
-    text-align: center;
-    padding: 24px 0 16px;
-  }
-  .header h1 { font-size: 20px; font-weight: 500; color: var(--text); }
-  .header .sub { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
-
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  .card {
-    background: var(--card);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px;
-  }
-  .card .label { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
-  .card .value { font-size: 22px; font-weight: 500; }
-  .card .delta { font-size: 12px; margin-top: 2px; }
-  .card .delta.up { color: var(--red); }
-  .card .delta.down { color: var(--green); }
-
-  .section {
-    margin-bottom: 24px;
-  }
-  .section-title {
-    font-size: 15px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 12px;
-    padding-left: 8px;
-    border-left: 3px solid var(--c-weight);
-  }
-
-  .chart-wrap {
-    background: var(--card);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    padding: 16px;
-    margin-bottom: 16px;
-  }
-  .chart-wrap .chart-inner {
-    position: relative;
-    width: 100%;
-    height: 260px;
-  }
-
-  .chart-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-bottom: 10px;
-    font-size: 12px;
-    color: var(--text-secondary);
-  }
-  .chart-legend span {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .chart-legend .dot {
-    width: 9px; height: 9px; border-radius: 2px; display: inline-block;
-  }
-
-  .data-table-wrap {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    margin-bottom: 16px;
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius);
-    background: var(--card);
-  }
-  .data-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 12px;
-    min-width: 600px;
-  }
-  .data-table th, .data-table td {
-    padding: 8px 10px;
-    text-align: center;
-    border-bottom: 0.5px solid var(--border-light);
-    white-space: nowrap;
-  }
-  .data-table th {
-    background: var(--bg);
-    font-weight: 500;
-    color: var(--text-secondary);
-    font-size: 11px;
-    position: sticky;
-    top: 0;
-  }
-  .data-table th:first-child, .data-table td:first-child {
-    text-align: left;
-    font-weight: 500;
-    color: var(--text);
-    min-width: 80px;
-  }
-  .data-table tr:last-child td { border-bottom: none; }
-  .data-table .val-good { color: var(--good); }
-  .data-table .val-warn { color: var(--warn); }
-  .data-table .val-bad { color: var(--bad); }
-
-  .insight-list {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .insight-list li {
-    background: var(--card);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 14px;
-    display: flex;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  .insight-list .icon {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; flex-shrink: 0;
-  }
-  .insight-list .icon.good { background: var(--good-light); color: var(--good); }
-  .insight-list .icon.warn { background: var(--warn-light); color: var(--warn); }
-  .insight-list .icon.bad { background: var(--bad-light); color: var(--bad); }
-  .insight-list .body { font-size: 13px; color: var(--text); }
-  .insight-list .body strong { font-weight: 500; }
-
-  .footer {
-    text-align: center;
-    color: var(--text-muted);
-    font-size: 11px;
-    padding: 20px 0 8px;
-  }
-
-  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
-
-  @media (max-width: 480px) {
-    .cards { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-    .card { padding: 12px; }
-    .card .value { font-size: 18px; }
-    body { padding: 10px; }
-  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--text); font-size:14px; line-height:1.6; padding:16px; max-width:720px; margin:0 auto; }
+  .header { text-align:center; padding:24px 0 16px; }
+  .header h1 { font-size:20px; font-weight:500; }
+  .header .sub { font-size:13px; color:var(--text-2); margin-top:4px; }
+  .cards { display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-bottom:20px; }
+  .card { background:var(--card); border:0.5px solid var(--border); border-radius:var(--r-s); padding:14px; }
+  .card .label { font-size:12px; color:var(--text-2); margin-bottom:4px; }
+  .card .value { font-size:22px; font-weight:500; }
+  .card .delta { font-size:12px; margin-top:2px; }
+  .card .delta.up { color:var(--red); }
+  .card .delta.down { color:var(--green); }
+  .section { margin-bottom:24px; }
+  .section-title { font-size:15px; font-weight:500; margin-bottom:12px; padding-left:8px; border-left:3px solid var(--c-w); }
+  .chart-wrap { background:var(--card); border:0.5px solid var(--border); border-radius:var(--r); padding:16px; margin-bottom:16px; }
+  .chart-inner { position:relative; width:100%; height:260px; }
+  .chart-legend { display:flex; flex-wrap:wrap; gap:14px; margin-bottom:10px; font-size:12px; color:var(--text-2); }
+  .chart-legend span { display:flex; align-items:center; gap:4px; }
+  .chart-legend .dot { width:9px; height:9px; border-radius:2px; display:inline-block; }
+  .table-wrap { overflow-x:auto; margin-bottom:16px; border:0.5px solid var(--border); border-radius:var(--r); background:var(--card); }
+  table { width:100%; border-collapse:collapse; font-size:12px; min-width:600px; }
+  th,td { padding:8px 10px; text-align:center; border-bottom:0.5px solid var(--border-l); white-space:nowrap; }
+  th { background:var(--bg); font-weight:500; color:var(--text-2); font-size:11px; }
+  th:first-child,td:first-child { text-align:left; font-weight:500; min-width:80px; }
+  tr:last-child td { border-bottom:none; }
+  .val-good { color:var(--good); }
+  .val-warn { color:var(--warn); }
+  .val-bad { color:var(--bad); }
+  .insight-list { list-style:none; display:flex; flex-direction:column; gap:10px; }
+  .insight-list li { background:var(--card); border:0.5px solid var(--border); border-radius:var(--r-s); padding:14px; display:flex; gap:10px; align-items:flex-start; }
+  .insight-list .icon { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+  .insight-list .icon.good { background:var(--good-l); color:var(--good); }
+  .insight-list .icon.warn { background:var(--warn-l); color:var(--warn); }
+  .insight-list .icon.bad { background:var(--bad-l); color:var(--bad); }
+  .insight-list .body { font-size:13px; }
+  .insight-list .body strong { font-weight:500; }
+  .footer { text-align:center; color:var(--text-3); font-size:11px; padding:20px 0 8px; }
+  .err-msg { text-align:center; color:var(--text-3); padding:40px; font-size:13px; }
+  @media (max-width:480px) { .cards { gap:8px; } .card { padding:12px; } .card .value { font-size:18px; } body { padding:10px; } }
 </style>
 </head>
 <body>
 
-<h2 class="sr-only">减重周报 - ankh - 2026年7月13日至7月19日</h2>
-
 <div class="header">
-  <h1>减重周报</h1>
-  <div class="sub">第28周 · 7月13日 – 7月19日 · ankh / 31岁 / 158cm</div>
+  <h1>减重看板</h1>
+  <div class="sub">ankh / 31岁 / 158cm / 目标 47kg</div>
 </div>
 
-<div class="cards" id="summaryCards"></div>
+<div class="cards" id="cards"></div>
 
 <div class="section">
   <div class="section-title">体重与体脂趋势</div>
   <div class="chart-wrap">
     <div class="chart-legend">
-      <span><span class="dot" style="background:var(--c-weight)"></span>体重 (kg)</span>
-      <span><span class="dot" style="background:var(--c-fat)"></span>体脂率 (%)</span>
-      <span style="color:var(--text-muted)">--- 目标 47kg</span>
+      <span><span class="dot" style="background:#8ba0b4"></span>体重 (kg)</span>
+      <span><span class="dot" style="background:#9db5a0"></span>体脂率 (%)</span>
+      <span style="color:var(--text-3)">--- 目标 47kg</span>
     </div>
-    <div class="chart-inner">
-      <canvas id="weightChart" role="img" aria-label="体重与体脂率 7 日趋势图"></canvas>
-    </div>
+    <div class="chart-inner"><canvas id="wChart"></canvas></div>
   </div>
 </div>
 
@@ -227,311 +78,197 @@
   <div class="section-title">热量摄入</div>
   <div class="chart-wrap">
     <div class="chart-legend">
-      <span><span class="dot" style="background:var(--c-calorie)"></span>实际摄入 (kcal)</span>
-      <span style="color:var(--text-muted)">--- 目标 1350 kcal</span>
+      <span><span class="dot" style="background:#c4a3a0"></span>实际摄入 (kcal)</span>
+      <span style="color:var(--text-3)">--- 目标 1350 kcal</span>
     </div>
-    <div class="chart-inner">
-      <canvas id="calorieChart" role="img" aria-label="每日热量摄入柱状图"></canvas>
-    </div>
+    <div class="chart-inner"><canvas id="cChart"></canvas></div>
   </div>
 </div>
 
 <div class="section">
   <div class="section-title">详细数据</div>
-  <div class="data-table-wrap">
-    <table class="data-table" id="detailTable">
-      <thead></thead>
-      <tbody></tbody>
-    </table>
-  </div>
+  <div class="table-wrap"><table id="dTable"><thead></thead><tbody></tbody></table></div>
 </div>
 
 <div class="section">
   <div class="section-title">本周洞察</div>
-  <ul class="insight-list" id="insightList"></ul>
+  <ul class="insight-list" id="insights"></ul>
 </div>
 
-<div class="footer">
-  数据由 WorkBuddy 自动采集分析 · 每周日更新
-</div>
+<div class="footer">数据由 WorkBuddy 自动更新</div>
 
 <script>
 (function() {
 
-var FALLBACK = {
-  user: { name:"ankh", height:158, birthYear:1995, gender:"female", targetWeight:47, targetWeightLongTerm:47, targetCalories:1350, bmr:1191, tdee:1550 },
-  records: [],
-  notes: {}
+// === DATA (embedded, no fetch needed) ===
+var DATA = {
+  user: { name:"ankh", height:158, birthYear:1995, gender:"female", targetWeight:47, targetCalories:1350, bmr:1191, tdee:1550 },
+  records: [
+    { date:"2026-07-14", weight:49.0, bodyFat:22.4, muscle:73.0, bmr:1191, bodyAge:29,
+      calories:{breakfast:269,lunch:507,dinner:0,snack:7,total:783},
+      exercise:{minutes:0,completed:false},
+      sleep:{hours:3}, bowel:false, waterMl:0,
+      notes:"早：无糖黑豆浆+玉米+蛋+生菜(269)。午：虾+鸡胸+饭+蛋+蔬菜(507)。美式+菊花(7)。蛋白80.5g。晚睡3h。便秘2周。"
+    }
+  ]
 };
 
-var M, recs;
-var hasChart = false;
+var M = DATA.user;
+var recs = DATA.records;
 
-var statusEl = document.getElementById('summaryCards');
-if (statusEl) statusEl.innerHTML = '<div class="card" style="grid-column:1/-1;text-align:center;padding:20px"><div class="label">正在加载数据...</div></div>';
-
-function init(data) {
-  M = data.user;
-  recs = data.records;
-
-var dates = ['周一','周二','周三','周四','周五','周六','周日'];
-var weekLabels = [];
-for (var i = 0; i < 7; i++) { weekLabels.push(dates[i]); }
-
-var weightData = new Array(7).fill(null);
-var fatData = new Array(7).fill(null);
-var calorieData = new Array(7).fill(null);
-var sleepData = new Array(7).fill(null);
-var exerciseData = new Array(7).fill(null);
-var bowelData = new Array(7).fill(null);
-var waterData = new Array(7).fill(null);
+// === Build week data (Mon-Sun starting 2026-07-13) ===
+var labels = ['周一','周二','周三','周四','周五','周六','周日'];
+var wData = [null,null,null,null,null,null,null];
+var fData = [null,null,null,null,null,null,null];
+var cData = [null,null,null,null,null,null,null];
+var sData = [null,null,null,null,null,null,null];
+var eData = [null,null,null,null,null,null,null];
+var bData = [null,null,null,null,null,null,null];
+var dWater = [null,null,null,null,null,null,null];
 
 var weekStart = new Date('2026-07-13');
-
 recs.forEach(function(r) {
   var d = new Date(r.date);
-  var dayIdx = Math.floor((d - weekStart) / 86400000);
-  if (dayIdx >= 0 && dayIdx < 7) {
-    weightData[dayIdx] = r.weight;
-    fatData[dayIdx] = r.bodyFat;
-    calorieData[dayIdx] = r.calories.total || null;
-    sleepData[dayIdx] = r.sleep.hours;
-    exerciseData[dayIdx] = r.exercise.minutes;
-    bowelData[dayIdx] = r.bowel ? 1 : 0;
-    waterData[dayIdx] = r.waterMl;
+  var idx = Math.floor((d - weekStart) / 86400000);
+  if (idx >= 0 && idx < 7) {
+    wData[idx] = r.weight;
+    fData[idx] = r.bodyFat;
+    cData[idx] = r.calories.total || null;
+    sData[idx] = r.sleep.hours;
+    eData[idx] = r.exercise.minutes;
+    bData[idx] = r.bowel ? 1 : 0;
+    dWater[idx] = r.waterMl;
   }
 });
 
-var avgWeight = null, avgCalories = null, avgSleep = null, totalExercise = 0;
-var countW = 0, countC = 0, countS = 0;
-weightData.forEach(function(v) { if (v !== null) { avgWeight = (avgWeight||0) + v; countW++; } });
-calorieData.forEach(function(v) { if (v !== null) { avgCalories = (avgCalories||0) + v; countC++; } });
-sleepData.forEach(function(v) { if (v !== null) { avgSleep = (avgSleep||0) + v; countS++; } });
-exerciseData.forEach(function(v) { if (v !== null) totalExercise += v; });
-if (countW) avgWeight = avgWeight / countW;
-if (countC) avgCalories = avgCalories / countC;
-if (countS) avgSleep = avgSleep / countS;
+var lastW = wData.filter(function(v){return v!==null;}).pop();
+var avgC = null, cntC = 0;
+cData.forEach(function(v){ if(v!==null){avgC=(avgC||0)+v;cntC++;} });
+if(cntC) avgC = avgC/cntC;
+var avgS = null, cntS = 0;
+sData.forEach(function(v){ if(v!==null){avgS=(avgS||0)+v;cntS++;} });
+if(cntS) avgS = avgS/cntS;
 
-var lastWeight = weightData.filter(function(v){ return v!==null; }).pop();
-var prevWeight = null;
-for (var i = weightData.length-2; i >= 0; i--) {
-  if (weightData[i] !== null) { prevWeight = weightData[i]; break; }
+var bmi = lastW ? (lastW / ((M.height/100)*(M.height/100))) : null;
+var gap = avgC ? (M.tdee - avgC) : null;
+
+// === Render summary cards ===
+var cardsEl = document.getElementById('cards');
+cardsEl.innerHTML = [
+  '<div class="card"><div class="label">当前体重</div><div class="value">'+(lastW?lastW.toFixed(1)+' kg':'--')+'</div><div class="delta '+(lastW&&lastW>47?'up':'down')+'">目标 '+M.targetWeight+'kg</div></div>',
+  '<div class="card"><div class="label">BMI</div><div class="value">'+(bmi?bmi.toFixed(1):'--')+'</div><div class="delta '+(bmi&&bmi<24?'down':'up')+'">'+(bmi&&bmi<18.5?'偏瘦':bmi&&bmi<24?'标准':'超重')+'</div></div>',
+  '<div class="card"><div class="label">今日摄入</div><div class="value">'+(avgC?Math.round(avgC)+' kcal':'--')+'</div><div class="delta '+(gap&&gap>0?'down':'up')+'">'+(gap?(gap>0?'缺口 '+Math.round(gap):'盈余 '+Math.round(-gap))+' kcal':'')+'</div></div>',
+  '<div class="card"><div class="label">睡眠</div><div class="value">'+(avgS?avgS.toFixed(1)+'h':'--')+'</div><div class="delta '+(avgS&&avgS<6?'up':'down')+'">'+(avgS&&avgS<6?'不足':'尚可')+'</div></div>'
+].join('');
+
+// === Render table ===
+var thead = document.querySelector('#dTable thead');
+var tbody = document.querySelector('#dTable tbody');
+thead.innerHTML = '<tr><th>指标</th>'+labels.map(function(l){return '<th>'+l+'</th>';}).join('')+'</tr>';
+
+var metrics = [
+  {l:'体重 (kg)',d:wData,u:''},
+  {l:'体脂率 (%)',d:fData,u:'%'},
+  {l:'BMI',d:wData.map(function(w){return w?(w/((M.height/100)*(M.height/100))):null;}),u:''},
+  {l:'摄入 (kcal)',d:cData,u:''},
+  {l:'睡眠 (h)',d:sData,u:'h'},
+  {l:'运动 (min)',d:eData,u:''},
+  {l:'饮水 (ml)',d:dWater,u:''},
+  {l:'排便',d:bData,u:''}
+];
+
+tbody.innerHTML = metrics.map(function(m){
+  return '<tr><td>'+m.l+'</td>'+m.d.map(function(v){
+    if(v===null) return '<td style="color:var(--text-3)">--</td>';
+    if(m.l==='排便') return '<td>'+(v===1?'<span class="val-good">正常</span>':'<span class="val-bad">异常</span>')+'</td>';
+    return '<td>'+v+m.u+'</td>';
+  }).join('')+'</tr>';
+}).join('');
+
+// === Render insights ===
+var insEl = document.getElementById('insights');
+var items = [];
+
+if(lastW) {
+  var _bmi = lastW/((M.height/100)*(M.height/100));
+  if(_bmi < 18.5) items.push({c:'bad',i:'!',t:'<strong>BMI '+_bmi.toFixed(1)+' 偏低</strong>，关注月经变化。'});
+  else if(_bmi < 20) items.push({c:'warn',i:'!',t:'<strong>BMI '+_bmi.toFixed(1)+'，标准范围下沿</strong>。减重空间有限，以体脂率为目标。'});
 }
-var weightDelta = (lastWeight !== null && prevWeight !== null) ? (lastWeight - prevWeight) : null;
-
-var bmi = lastWeight ? (lastWeight / ((M.height/100)*(M.height/100))) : null;
-var calorieGap = avgCalories ? (M.tdee - avgCalories) : null;
-
-function renderSummary() {
-  var cards = document.getElementById('summaryCards');
-  var items = [
-    { label: '当前体重', value: lastWeight ? lastWeight.toFixed(1)+' kg' : '--', delta: weightDelta !== null ? (weightDelta >=0 ? '+' : '') + weightDelta.toFixed(1)+' kg' : '', dir: weightDelta !== null ? (weightDelta > 0 ? 'up' : 'down') : '' },
-    { label: 'BMI', value: bmi ? bmi.toFixed(1) : '--', delta: bmi && bmi < 18.5 ? '偏瘦' : bmi && bmi < 24 ? '标准' : '超重', dir: bmi && bmi >= 18.5 && bmi < 24 ? 'down' : 'up' },
-    { label: '日均摄入', value: avgCalories ? Math.round(avgCalories)+' kcal' : '--', delta: calorieGap ? (calorieGap>0 ? '缺口 '+Math.round(calorieGap)+' kcal' : '盈余 '+Math.round(-calorieGap)+' kcal') : '', dir: calorieGap && calorieGap>0 ? 'down' : 'up' },
-    { label: '目标进度', value: lastWeight ? Math.round((1-(lastWeight-M.targetWeight)/(M.targetWeight))*100)+'%' : '--', delta: M.targetWeight+'kg 目标', dir: '' }
-  ];
-  cards.innerHTML = items.map(function(it) {
-    return '<div class="card"><div class="label">'+it.label+'</div><div class="value">'+it.value+'</div><div class="delta '+it.dir+'">'+it.delta+'</div></div>';
-  }).join('');
+if(avgS && avgS < 6) items.push({c:'bad',i:'!',t:'<strong>日均睡眠仅 '+avgS.toFixed(1)+'h</strong>。睡眠不足是减重最大敌人——皮质醇升高促腹部脂肪堆积。23:30前入睡。'});
+items.push({c:'good',i:'✓',t:'<strong>核心原则</strong>：1300-1400 kcal/天，不低于1200。运动心率<125。饮水≥1500ml。23:30前睡。'});
+if(lastW) {
+  var need = lastW - M.targetWeight;
+  if(need > 0) items.push({c:'warn',i:'!',t:'<strong>距离目标 '+M.targetWeight+'kg 还差 '+need.toFixed(1)+'kg</strong>。按每周减0.5kg安全速度，约 '+(Math.ceil(need/0.5))+' 周达成。'});
 }
 
-function renderWeightChart() {
-  if (!hasChart) { document.querySelector('#weightChart').parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:40px">图表加载中...</div>'; return; }
+insEl.innerHTML = items.map(function(it){
+  return '<li><div class="icon '+it.c+'">'+it.i+'</div><div class="body">'+it.t+'</div></li>';
+}).join('');
+
+// === Charts (load Chart.js async, render if available) ===
+var chartLoaded = false;
+var chart1 = null, chart2 = null;
+
+function tryRenderCharts() {
+  if(!chartLoaded || typeof Chart === 'undefined') return;
+  
   try {
-  var ctx = document.getElementById('weightChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: weekLabels,
-      datasets: [
-        {
-          label: '体重',
-          data: weightData,
-          borderColor: '#8ba0b4',
-          backgroundColor: 'rgba(139,160,180,0.08)',
-          borderWidth: 2,
-          tension: 0.3,
-          fill: true,
-          pointRadius: 5,
-          pointBackgroundColor: '#8ba0b4',
-          yAxisID: 'y'
-        },
-        {
-          label: '体脂率',
-          data: fatData,
-          borderColor: '#9db5a0',
-          backgroundColor: 'rgba(157,181,160,0.08)',
-          borderWidth: 2,
-          tension: 0.3,
-          fill: true,
-          pointRadius: 5,
-          pointBackgroundColor: '#9db5a0',
-          borderDash: [5,3],
-          yAxisID: 'y1'
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      interaction: { intersect: false, mode: 'index' },
-      plugins: {
-        legend: { display: false },
-        annotation: {
-          annotations: {
-            targetLine: {
-              type: 'line',
-              yMin: M.targetWeight, yMax: M.targetWeight,
-              borderColor: '#c48888',
-              borderDash: [4,4],
-              borderWidth: 1
-            }
-          }
-        }
-      },
-      scales: {
-        y: {
-          type: 'linear',
-          position: 'left',
-          title: { display: false },
-          grid: { color: 'rgba(0,0,0,0.04)' },
-          min: 44, max: 52,
-          ticks: { font: { size: 11 }, color: '#8ba0b4' }
-        },
-        y1: {
-          type: 'linear',
-          position: 'right',
-          grid: { drawOnChartArea: false },
-          min: 18, max: 28,
-          ticks: { font: { size: 11 }, color: '#9db5a0', callback: function(v){ return v+'%'; } }
-        },
-        x: {
-          grid: { display: false },
-          ticks: { font: { size: 11 }, color: '#8a8a8a' }
+    var ctx1 = document.getElementById('wChart').getContext('2d');
+    chart1 = new Chart(ctx1, {
+      type:'line',
+      data:{labels:labels,datasets:[
+        {label:'体重',data:wData,borderColor:'#8ba0b4',backgroundColor:'rgba(139,160,180,0.08)',borderWidth:2,tension:0.3,fill:true,pointRadius:5,pointBackgroundColor:'#8ba0b4',yAxisID:'y'},
+        {label:'体脂率',data:fData,borderColor:'#9db5a0',backgroundColor:'rgba(157,181,160,0.08)',borderWidth:2,tension:0.3,fill:true,pointRadius:5,pointBackgroundColor:'#9db5a0',borderDash:[5,3],yAxisID:'y1'}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,interaction:{intersect:false,mode:'index'},
+        plugins:{legend:{display:false}},
+        scales:{
+          y:{position:'left',min:44,max:52,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{size:11},color:'#8ba0b4'}},
+          y1:{position:'right',min:18,max:28,grid:{drawOnChartArea:false},ticks:{font:{size:11},color:'#9db5a0',callback:function(v){return v+'%';}}},
+          x:{grid:{display:false},ticks:{font:{size:11},color:'#8a8a8a'}}
         }
       }
-    }
-  });
-  } catch(e) { document.querySelector('#weightChart').parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:40px">图表组件加载失败，请刷新页面重试</div>'; }
-}
+    });
+  } catch(e) {
+    document.querySelector('#wChart').parentElement.innerHTML = '<div class="err-msg">体重图表加载失败</div>';
+  }
 
-function renderCalorieChart() {
-  if (!hasChart) { document.querySelector('#calorieChart').parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:40px">图表加载中...</div>'; return; }
   try {
-  var ctx = document.getElementById('calorieChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: weekLabels,
-      datasets: [
-        {
-          label: '摄入',
-          data: calorieData,
-          backgroundColor: '#c4a3a0',
-          borderRadius: 4,
-          barThickness: 28
-        }
-      ]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: {
-        y: {
-          grid: { color: 'rgba(0,0,0,0.04)' },
-          min: 0, max: 2000,
-          ticks: { font: { size: 11 }, color: '#8a8a8a', callback: function(v){ return v+' kcal'; } }
-        },
-        x: {
-          grid: { display: false },
-          ticks: { font: { size: 11 }, color: '#8a8a8a' }
+    var ctx2 = document.getElementById('cChart').getContext('2d');
+    chart2 = new Chart(ctx2, {
+      type:'bar',
+      data:{labels:labels,datasets:[
+        {label:'摄入',data:cData,backgroundColor:'#c4a3a0',borderRadius:4,barThickness:28}
+      ]},
+      options:{responsive:true,maintainAspectRatio:false,
+        plugins:{legend:{display:false}},
+        scales:{
+          y:{min:0,max:2000,grid:{color:'rgba(0,0,0,0.04)'},ticks:{font:{size:11},color:'#8a8a8a',callback:function(v){return v+' kcal';}}},
+          x:{grid:{display:false},ticks:{font:{size:11},color:'#8a8a8a'}}
         }
       }
-    }
-  });
-  } catch(e) { document.querySelector('#calorieChart').parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:40px">图表组件加载失败，请刷新页面重试</div>'; }
+    });
+  } catch(e) {
+    document.querySelector('#cChart').parentElement.innerHTML = '<div class="err-msg">热量图表加载失败</div>';
+  }
 }
 
-function renderTable() {
-  var thead = document.querySelector('#detailTable thead');
-  var tbody = document.querySelector('#detailTable tbody');
+// Try multiple CDNs
+var cdnUrls = [
+  'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js',
+  'https://unpkg.com/chart.js@4.4.1/dist/chart.umd.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js'
+];
 
-  thead.innerHTML = '<tr><th>指标</th>'+weekLabels.map(function(d){ return '<th>'+d+'</th>'; }).join('')+'</tr>';
-
-  var metrics = [
-    { key: 'weight', label: '体重 (kg)', data: weightData, unit: '', target: M.targetWeight, low: 45, high: 50, lowerGood: true },
-    { key: 'bodyFat', label: '体脂率 (%)', data: fatData, unit: '%', target: 22, low: 20, high: 26, lowerGood: true },
-    { key: 'bmi', label: 'BMI', data: weightData.map(function(w){ return w ? (w/((M.height/100)*(M.height/100))) : null; }), unit: '', target: 20, low: 18.5, high: 24, lowerGood: false },
-    { key: 'calories', label: '摄入 (kcal)', data: calorieData, unit: '', target: M.targetCalories, low: 1200, high: 1600, lowerGood: false },
-    { key: 'sleep', label: '睡眠 (h)', data: sleepData, unit: 'h', target: 7, low: 6, high: 9, lowerGood: false },
-    { key: 'exercise', label: '运动 (min)', data: exerciseData, unit: 'min', target: 30, low: 0, high: 60, lowerGood: false },
-    { key: 'water', label: '饮水 (ml)', data: waterData, unit: '', target: 1700, low: 1000, high: 2000, lowerGood: false },
-    { key: 'bowel', label: '排便', data: bowelData, unit: '', target: 1, low: 0, high: 1, lowerGood: false }
-  ];
-
-  tbody.innerHTML = metrics.map(function(m) {
-    return '<tr><td>'+m.label+'</td>'+m.data.map(function(v) {
-      var cls = '';
-      if (v === null) return '<td style="color:var(--text-muted)">--</td>';
-      if (m.key === 'bowel') return '<td>'+(v===1?'<span class="val-good">正常</span>':'<span class="val-bad">异常</span>')+'</td>';
-      if (m.lowerGood && v <= m.target) cls = 'val-good';
-      else if (!m.lowerGood && v >= m.target) cls = 'val-good';
-      return '<td class="'+cls+'">'+v+m.unit+'</td>';
-    }).join('')+'</tr>';
-  }).join('');
+function tryLoadChart(idx) {
+  if(idx >= cdnUrls.length) return;
+  var s = document.createElement('script');
+  s.src = cdnUrls[idx];
+  s.onload = function() { chartLoaded = true; tryRenderCharts(); };
+  s.onerror = function() { tryLoadChart(idx+1); };
+  document.head.appendChild(s);
 }
-
-function renderInsights() {
-  var insights = document.getElementById('insightList');
-  var items = [];
-
-  if (lastWeight && prevWeight && lastWeight - prevWeight > 0.5) {
-    items.push({ icon: 'bad', label: '⚠', text: '<strong>体重上涨偏快</strong>。过去7天体重上涨了'+(lastWeight-prevWeight).toFixed(1)+'kg。检查是否水分滞留或摄入偏高。便秘会额外贡献0.5-1kg。' });
-  }
-
-  if (avgSleep && avgSleep < 6) {
-    items.push({ icon: 'bad', label: '⚠', text: '<strong>本周日均睡眠仅 '+avgSleep.toFixed(1)+' 小时</strong>，严重不足。睡眠不足直接导致皮质醇升高，促进腹部脂肪堆积和月经紊乱。这是减重最大的敌人。23:30前必须入睡。' });
-  }
-
-  if (lastWeight) {
-    var _bmi = lastWeight / ((M.height/100)*(M.height/100));
-    if (_bmi < 18.5) {
-      items.push({ icon: 'bad', label: '!', text: '<strong>BMI '+_bmi.toFixed(1)+' 已低于WHO健康下限 18.5</strong>。请关注月经变化，任何推迟都应立即调整目标并就医。' });
-    } else if (_bmi < 20) {
-      items.push({ icon: 'warn', label: '！', text: '<strong>BMI '+_bmi.toFixed(1)+'，处于标准范围下沿</strong>。减重空间有限，以优化体脂率而非绝对体重为目标。月经一旦异常立即调整。' });
-    }
-  }
-
-  if (!lastWeight) {
-    items.push({ icon: 'warn', label: '！', text: '<strong>本周尚无体重数据</strong>。请每天早上称重并将体脂秤截图发送给 WorkBuddy。' });
-  }
-
-  items.push({ icon: 'good', label: '✓', text: '<strong>核心提醒</strong>：热量目标 1300-1400 kcal/天，不低于 1200（防闭经）。运动以快走为主，心率不超过 125。每天饮水 ≥ 1500ml，23:30前睡觉。' });
-
-  insights.innerHTML = items.map(function(it) {
-    return '<li><div class="icon '+it.icon+'">'+it.label+'</div><div class="body">'+it.text+'</div></li>';
-  }).join('');
-}
-
-renderSummary();
-renderWeightChart();
-renderCalorieChart();
-renderTable();
-renderInsights();
-}
-
-fetch('/data/weight-data.json')
-  .then(function(r) { return r.json(); })
-  .then(function(d) { init(d); })
-  .catch(function() { init(FALLBACK); });
-
-// Load Chart.js dynamically (jsdelivr works better in China than cdnjs)
-var script = document.createElement('script');
-script.src = 'https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js';
-script.onload = function() { hasChart = true; };
-script.onerror = function() { /* charts won't render, but summary/table/insights will */ };
-document.head.appendChild(script);
+tryLoadChart(0);
 
 })();
 </script>
